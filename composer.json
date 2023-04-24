@@ -1,0 +1,22 @@
+{
+    "name": "momiamgood/server_1",
+    "description": "php p1",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "momiamgood",
+            "email": "forstuding411@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "7.4 | ^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Src\\": "core/Src/",
+            "":"app/"
+        }
+    }
+}
