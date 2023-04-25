@@ -3,7 +3,7 @@
         'name' => 'momiamgood/serv',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'd6a98b8c3561ad99b07f8109e7710e7ae0c5d0a1',
+        'reference' => '50108871aff7bc25cb9f1f6f6d9a055effaaf37d',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -141,7 +141,7 @@
         'momiamgood/serv' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'd6a98b8c3561ad99b07f8109e7710e7ae0c5d0a1',
+            'reference' => '50108871aff7bc25cb9f1f6f6d9a055effaaf37d',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -155,6 +155,17 @@
             'install_path' => __DIR__ . '/../nesbot/carbon',
             'aliases' => array(
                 0 => '2.x-dev',
+            ),
+            'dev_requirement' => false,
+        ),
+        'nikic/fast-route' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '34128a32009e1b41c4615bcd7d4c39968931e9ea',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nikic/fast-route',
+            'aliases' => array(
+                0 => '2.0.x-dev',
             ),
             'dev_requirement' => false,
         ),

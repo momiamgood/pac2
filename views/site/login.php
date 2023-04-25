@@ -1,4 +1,4 @@
-
+<p class="logo"><img class="logo-img" alt="$" src="../static/media/lib_logo.png">Библиотека</p>
 <h2>Авторизация</h2>
 <h3><?= $message ?? ''; ?></h3>
 

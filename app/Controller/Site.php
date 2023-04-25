@@ -2,12 +2,12 @@
 
 namespace Controller;
 
-use Illuminate\Database\Capsule\Manager as DB;
 use Src\Request;
 use Src\View;
 use Model\Post;
 use Model\User;
 use Src\Auth\Auth;
+use Model\Book;
 
 class Site
 {
@@ -18,9 +18,21 @@ class Site
     }
 
 
+    public function book_list(): string
+    {
+        $book_list = Book::all();
+        return (new View())->render('site.book', ['book_list' => $book_list]);
+    }
+
+    public function book(Request $request): string
+    {
+        $book_list = Book::where('book_id', $request->id)->get();
+        return (new View())->render('site.book', ['book_list' => $book_list]);
+    }
+
     public function hello(): string
     {
-        return new View('site.hello', ['message' => 'hello working']);
+        return new View('site.main_page', ['message' => 'hello working']);
     }
 
     public function signup(Request $request): string
