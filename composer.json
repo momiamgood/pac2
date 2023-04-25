@@ -1,5 +1,5 @@
 {
-    "name": "momiamgood/server_1",
+    "name": "momiamgood/serv",
     "description": "php p1",
     "type": "project",
     "license": "MIT",
@@ -11,12 +11,13 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "7.4 | ^8.2"
+        "php": "8.0 | ^8.2"
     },
     "autoload": {
         "psr-4": {
             "Src\\": "core/Src/",
-            "":"app/"
+            "": "app/"
         }
     }
+
 }
