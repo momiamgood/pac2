@@ -1,6 +1,6 @@
 <?php
 
-
+namespace Src;
 class Session
 {
     public static function set($name, $value): void
