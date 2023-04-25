@@ -1,15 +1,19 @@
 <?php
+
 namespace Controller;
 
+use Illuminate\Database\Capsule\Manager as DB;
 use Src\View;
+use Model\Post;
 
 class Site
 {
     public function index(): string
     {
-        $view = new View();
-        return $view->render('site.hello', ['message' => 'index working']);
+        $posts = Post::all();
+        return (new View())->render('site.post', ['posts' => $posts]);
     }
+
 
     public function hello(): string
     {
