@@ -10,4 +10,6 @@ class Reader extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+    protected $fillable  = ['fio', 'adress', 'phone_number'];
 }

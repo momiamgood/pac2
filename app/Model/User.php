@@ -4,6 +4,7 @@ namespace Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Src\Auth\IdentityInterface;
 
 class User extends Model implements IdentityInterface
@@ -14,7 +15,8 @@ class User extends Model implements IdentityInterface
     protected $fillable = [
         'name',
         'login',
-        'password'
+        'password',
+        'role_id'
     ];
 
     protected static function booted()
@@ -42,5 +44,22 @@ class User extends Model implements IdentityInterface
     {
         return self::where(['login' => $credentials['login'],
             'password' => md5($credentials['password'])])->first();
+    }
+
+    public function getRole(): BelongsTo
+    {
+        return $this->belongsTo(Role::class, 'role', 'id');
+    }
+
+    //Связь с моделью роль
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+
+    //Есть ли роль текущего пользователя в массиве ролей
+    public function hasRole($roles): bool
+    {
+        return in_array($this->role->role, $roles);
     }
 }

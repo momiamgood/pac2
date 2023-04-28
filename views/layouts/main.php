@@ -8,30 +8,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../static/style/main_style.css">
+    <link rel="stylesheet" href="../../public/static/style/main_style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Библиотека</title>
 </head>
 <body>
-<header>
-    <nav>
-        <a href="<?= app()->route->getUrl('/hello') ?>"><img class="logo-img" src="../static/media/lib_logo.png">Библиотека</a>
-        <?php
-        if (!app()->auth::check()):
-            ?>
-            <a href="<?= app()->route->getUrl('/login') ?>">Вход</a>
-            <a href="<?= app()->route->getUrl('/signup') ?>">Регистрация</a>
-        <?php
-        else:
-            ?>
-            <a href="<?= app()->route->getUrl('/logout') ?>">Выход (<?= app()->auth::user()->name ?>)</a>
-        <?php
-        endif;
-        ?>
-    </nav>
-</header>
-<main>
+<div class="main-container">
     <?= $content ?? '' ?>
-</main>
-
+</div>
 </body>
 </html>

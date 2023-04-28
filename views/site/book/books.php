@@ -31,34 +31,35 @@ use Src\Auth\Auth;
 
 <main>
     <div class="search"><input type="text" name="search" class="seacrh-from"><img
-                src="../../public/static/media/search_icon.svg" alt="search">
+                src="../../../public/static/media/search_icon.svg" alt="search">
     </div>
 
-    <h1>Главная</h1>
-    <p class="txt">На главной странице представлены наиболее популярные книги</p>
-    <div class="popular-book-list"
-        <?php
-        foreach ($book_list
+    <h1>Список книг</h1>
 
-        as $book){
-        ?>
-    >
-        <div class="popular-book-list-itm">
-            <p class="title"><?= $book->name ?></p>
-            <div class="half-block">
-                <div>
-                    <p class="subtitle"><?= $book->author ?></p>
-                    <p class="subtitle"><?= $book->date_publish ?></p>
-                </div>
-                <p class="price"><?= $book->price ?></p>
-            </div>
-            <div class="bottom-block">
-                <a class="annotation-btn" href="books/?id=<?= $book->book_id ?>">Перейти к аннотации -></a>
-            </div>
-        </div>
+    <a href="<?= app()->route->getUrl('/book-add') ?>">Добавить книгу</a>
 
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Название</th>
+            <th scope="col">Автор</th>
+            <th scope="col">Год выпуска</th>
+            <th scope="col">Издательство</th>
+        </tr>
+        </thead>
+        <tbody
+            <?php
+            foreach ($book_list as $book){
+            ?>
+        >
+        <tr>
+            <th scope="row"><?= $book->name ?></th>
+            <td><?= $book->author ?></td>
+            <td><?= $book->price ?></td>
+            <td><?= $book->date_publish ?></td>
+        </tr>
         <?php
         }
         ?>
-    </div>
+    </table>
 </main>

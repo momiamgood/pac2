@@ -29,36 +29,37 @@ use Src\Auth\Auth;
     </div>
 </div>
 
-<main>
+<div class="main">
     <div class="search"><input type="text" name="search" class="seacrh-from"><img
-                src="../../public/static/media/search_icon.svg" alt="search">
+                src="../../../public/static/media/search_icon.svg" alt="search">
     </div>
 
-    <h1>Главная</h1>
-    <p class="txt">На главной странице представлены наиболее популярные книги</p>
-    <div class="popular-book-list"
-        <?php
-        foreach ($book_list
-
-        as $book){
-        ?>
-    >
-        <div class="popular-book-list-itm">
-            <p class="title"><?= $book->name ?></p>
-            <div class="half-block">
-                <div>
-                    <p class="subtitle"><?= $book->author ?></p>
-                    <p class="subtitle"><?= $book->date_publish ?></p>
-                </div>
-                <p class="price"><?= $book->price ?></p>
-            </div>
-            <div class="bottom-block">
-                <a class="annotation-btn" href="books/?id=<?= $book->book_id ?>">Перейти к аннотации -></a>
-            </div>
-        </div>
-
+    <h1>Список читателей</h1>
+    <a href="<?= app()->route->getUrl('/reader-add') ?>">
+        Добавить читателя
+    </a>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Имя</th>
+            <th scope="col">Номер билета</th>
+            <th scope="col">Адрес</th>
+            <th scope="col">Номер телефона</th>
+        </tr>
+        </thead>
+        <tbody
+            <?php
+            foreach ($reader_list as $reader){
+            ?>
+        >
+        <tr>
+            <th scope="row"><?= $reader->fio ?></th>
+            <td><?= $reader->reader_id ?></td>
+            <td><?= $reader->adress ?></td>
+            <td><?= $reader->phone_number ?></td>
+        </tr>
         <?php
         }
         ?>
-    </div>
-</main>
+    </table>
+</div>
