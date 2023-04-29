@@ -190,9 +190,9 @@ nav > a {
     justify-content: right;
 }
 
-.seacrh-from {
-    padding: 10px;
-    height: 10px;
+.search-from {
+    margin-bottom: 30px;
+    margin-top: 30px;
 }
 
 main {

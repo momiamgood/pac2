@@ -28,37 +28,34 @@ use Src\Auth\Auth;
                     src="../../../public/static/media/logout_icon.svg" alt="logout-icon">Выход</a>
     </div>
 </div>
-
 <main>
+    <h1>Выдача книги</h1>
     <form method="post">
-        <input type="text" name="search" class="seacrh-from" placeholder="Поиск">
-    </form>
+        <label for="book_id">Книга</label>
 
-    <h1>Список книг</h1>
-
-    <a href="<?= app()->route->getUrl('/book-add') ?>">Добавить книгу</a>
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Название</th>
-            <th scope="col">Автор</th>
-            <th scope="col">Год выпуска</th>
-            <th scope="col">Издательство</th>
-        </tr>
-        </thead>
-        <tbody>
         <?php
-        foreach ($book_list as $book){
+        if (isset($date_issue) && isset($book)) {
             ?>
-        <tr>
-            <th scope="row"><?= $book->name ?></th>
-            <td><?= $book->author ?></td>
-            <td><?= $book->price ?></td>
-            <td><?= $book->date_publish ?></td>
-        </tr>
-        <?php
+            <p>Дата выдачи: <?= $date_issue ?></p>
+            <p>Книга: <?= $book ?></p>
+            <?php
         }
         ?>
-    </table>
+
+        <select class="form-select" aria-label="Default select example" name="book_id" id="book_id">
+            <option selected>Выберете книгу</option>
+            <?php
+            foreach ($book_list as $book){?>
+                <option value="<?= $book->book_id ?>"><?= $book->name ?></option>
+                <?php
+            }
+            ?>
+
+        </select>
+        <label for="date">Дата возврата</label>
+        <input type="date" name="date_back" id="date">
+
+        <button class="submit-btn">Добавить</button>
+    </form>
+
 </main>

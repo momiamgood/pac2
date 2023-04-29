@@ -30,24 +30,24 @@ use Src\Auth\Auth;
     </div>
 
 
+<h1>Книги <?= $info->fio ?></h1>
 <table class="table">
     <thead>
     <tr>
-        <th scope="col">Номер читательского билета</th>
-        <th scope="col">ФИО</th>
+        <th scope="col">Название книги</th>
+        <th scope="col">Дата выдачи</th>
+        <th scope="col">Дата возврата</th>
     </tr>
     </thead>
     <tbody
         <?php
-        foreach ($reader_list
-
-        as $reader){
+        foreach ($book_list as $book_info){
         ?>
     >
     <tr>
-        <th scope="row"><?= $reader->id ?></th>
-        <td><?= $reader->fio ?></td>
-
+        <td><?= $book_name ?></td>
+        <td><?= $book_info->date_issue ?></td>
+        <td><?= $book_info->date_back ?></td>
     </tr>
 </table>
 

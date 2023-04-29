@@ -46,10 +46,6 @@ class User extends Model implements IdentityInterface
             'password' => md5($credentials['password'])])->first();
     }
 
-    public function getRole(): BelongsTo
-    {
-        return $this->belongsTo(Role::class, 'role', 'id');
-    }
 
     //Связь с моделью роль
     public function role(): BelongsTo

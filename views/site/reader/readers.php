@@ -30,14 +30,14 @@ use Src\Auth\Auth;
 </div>
 
 <div class="main">
-    <div class="search"><input type="text" name="search" class="seacrh-from"><img
-                src="../../../public/static/media/search_icon.svg" alt="search">
-    </div>
-
     <h1>Список читателей</h1>
     <a href="<?= app()->route->getUrl('/reader-add') ?>">
         Добавить читателя
     </a>
+    <form method="post" class="search-from">
+        <input type="text" name="search" placeholder="Поиск">
+    </form>
+
     <table class="table table-striped table-hover">
         <thead>
         <tr>
@@ -47,13 +47,12 @@ use Src\Auth\Auth;
             <th scope="col">Номер телефона</th>
         </tr>
         </thead>
-        <tbody
-            <?php
-            foreach ($reader_list as $reader){
+        <tbody>
+        <?php
+        foreach ($reader_list as $reader){
             ?>
-        >
         <tr>
-            <th scope="row"><?= $reader->fio ?></th>
+            <td><a href="reader?id=<?=$reader->reader_id?>"> <?= $reader->fio ?></a></td>
             <td><?= $reader->reader_id ?></td>
             <td><?= $reader->adress ?></td>
             <td><?= $reader->phone_number ?></td>
