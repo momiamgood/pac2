@@ -44,13 +44,12 @@ use Src\Auth\Auth;
             <th scope="col">Название</th>
         </tr>
         </thead>
-        <tbody
-            <?php
-            foreach ($publisher_list as $publisher){
+        <tbody>
+        <?php
+        foreach ($publisher_list as $publisher){
             ?>
-        >
         <tr>
-            <th scope="row"><?= $publisher->name ?></th>
+            <td><?= $publisher->name ?></td>
         </tr>
         <?php
         }

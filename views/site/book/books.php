@@ -30,11 +30,13 @@ use Src\Auth\Auth;
 </div>
 
 <main>
-    <form method="post">
-        <input type="text" name="search" class="seacrh-from" placeholder="Поиск">
-    </form>
 
     <h1>Список книг</h1>
+
+    <form method="post" class="search-from">
+        <input type="text" name="search" placeholder="Поиск">
+    </form>
+
 
     <a href="<?= app()->route->getUrl('/book-add') ?>">Добавить книгу</a>
 
@@ -45,6 +47,7 @@ use Src\Auth\Auth;
             <th scope="col">Автор</th>
             <th scope="col">Год выпуска</th>
             <th scope="col">Издательство</th>
+            <th>Удаление</th>
         </tr>
         </thead>
         <tbody>
@@ -52,10 +55,11 @@ use Src\Auth\Auth;
         foreach ($book_list as $book){
             ?>
         <tr>
-            <th scope="row"><?= $book->name ?></th>
+            <td><a href="book/?id=<?=$book->book_id?>"><?= $book->name ?></a></td>
             <td><?= $book->author ?></td>
             <td><?= $book->price ?></td>
             <td><?= $book->date_publish ?></td>
+            <td><a href="book-delete?id=<?=$book->book_id?>">Удалить</a></td>
         </tr>
         <?php
         }

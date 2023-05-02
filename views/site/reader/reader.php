@@ -28,10 +28,21 @@ use Src\Auth\Auth;
                         src="../../../public/static/media/logout_icon.svg" alt="logout-icon">Выход</a>
         </div>
     </div>
+<main>
+<?php
+foreach ($fio as $item) {?>
+    <h1><?= $item->fio ?></h1>
+    <?php
+}
 
+?>
+    <a href="/reader-book?id=<?= $id ?>">Выдать книгу</a>
+    <?php
 
-<h1>Книги <?= $info->fio ?></h1>
-<table class="table">
+    if ($info):
+        ?>
+    <p>Книги на руках</p>
+    <table class="table">
     <thead>
     <tr>
         <th scope="col">Название книги</th>
@@ -39,18 +50,24 @@ use Src\Auth\Auth;
         <th scope="col">Дата возврата</th>
     </tr>
     </thead>
-    <tbody
-        <?php
-        foreach ($book_list as $book_info){
-        ?>
-    >
+    <tbody>
+    <?php
+    foreach ($info as $book_info) {
+    ?>
     <tr>
-        <td><?= $book_name ?></td>
+        <td><?= $book_info->name ?></td>
         <td><?= $book_info->date_issue ?></td>
         <td><?= $book_info->date_back ?></td>
     </tr>
-</table>
+        <?php
+    }
+    ?>
+    </table>
+    <?php else :
+        ?>
+    <p>У читателя нет книг на руках</p>
+    <?php
+    endif;
+    ?>
 
-<?php
-
-}
+</main>

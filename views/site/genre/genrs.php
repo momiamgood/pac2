@@ -35,7 +35,7 @@ use Src\Auth\Auth;
     </div>
 
     <h1>Список жанров</h1>
-    <a href="<?= app()->route->getUrl('/reader-add') ?>">
+    <a href="<?= app()->route->getUrl('/genre-add') ?>">
         Добавить жанр
     </a>
     <table class="table table-striped table-hover">
@@ -44,16 +44,14 @@ use Src\Auth\Auth;
             <th scope="col">Жанр</th>
         </tr>
         </thead>
-        <tbody
-            <?php
-            foreach ($genre_list as $genre){
-            ?>
-        >
-        <tr>
-            <th scope="row"><?= $genre->name ?></th>
-
-        </tr>
+        <tbody>
         <?php
+        foreach ($genre_list as $genre) {
+            ?>
+            <tr>
+                <td><?= $genre->name ?></td>
+            </tr>
+            <?php
         }
         ?>
     </table>

@@ -33,28 +33,17 @@ use Src\Auth\Auth;
     <form method="post">
         <label for="book_id">Книга</label>
 
-        <?php
-        if (isset($date_issue) && isset($book)) {
-            ?>
-            <p>Дата выдачи: <?= $date_issue ?></p>
-            <p>Книга: <?= $book ?></p>
-            <?php
-        }
-        ?>
+        <p><?=$error?></p>
 
-        <select class="form-select" aria-label="Default select example" name="book_id" id="book_id">
-            <option selected>Выберете книгу</option>
+        <input name="book_id" id="book_id" type="text" list="books" placeholder="Выберите книгу">
+        <datalist id="books">
             <?php
             foreach ($book_list as $book){?>
                 <option value="<?= $book->book_id ?>"><?= $book->name ?></option>
                 <?php
             }
             ?>
-
-        </select>
-        <label for="date">Дата возврата</label>
-        <input type="date" name="date_back" id="date">
-
+        </datalist>
         <button class="submit-btn">Добавить</button>
     </form>
 

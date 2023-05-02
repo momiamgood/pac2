@@ -45,11 +45,10 @@ use Src\Auth\Auth;
             <th scope="col">Логин</th>
         </tr>
         </thead>
-        <tbody
-            <?php
-            foreach ($lib_list as $lib){
+        <tbody>
+        <?php
+        foreach ($lib_list as $lib){
             ?>
-        >
         <tr>
             <th scope="row"><?= $lib->name ?></th>
             <th scope="row"><?= $lib->login ?></th>

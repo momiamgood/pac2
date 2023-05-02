@@ -8,7 +8,11 @@ Route::add(['GET', 'POST'], '/login', [Controller\Site::class, 'login']);
 Route::add('GET', '/logout', [Controller\Site::class, 'logout']);
 Route::add(["GET", "POST"], '/books', [Controller\BookView::class, 'book_list'])
     ->middleware('auth', 'can:admin|librarian');
+Route::add(["GET", "POST"], '/book/', [Controller\BookView::class, 'book_detail'])
+    ->middleware('auth', 'can:admin|librarian');
 Route::add(['GET', 'POST'], '/book-add', [Controller\BookView::class, 'book_add'])
+    ->middleware('auth', 'can:admin|librarian');
+Route::add(['GET', 'POST'], '/book-update', [Controller\BookView::class, 'book_update'])
     ->middleware('auth', 'can:admin|librarian');
 Route::add(['GET', 'POST'], '/readers', [Controller\ReaderView::class, 'reader_list'])
     ->middleware('auth', 'can:admin|librarian');
@@ -38,6 +42,7 @@ Route::add(['GET', 'POST'], '/hall-add', [Controller\HallView::class, 'hall_add'
 
 Route::add(['GET', 'POST'], '/reader-book', [Controller\ReaderView::class, 'book_reader'])
     ->middleware('auth', 'can:librarian|admin');
-
+Route::add(['GET', 'POST'], '/book-delete', [Controller\BookView::class, 'delete_book'])
+    ->middleware('auth', 'can:librarian|admin');
 
 

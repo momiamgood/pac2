@@ -58,4 +58,5 @@ class Site
         return new View('site.profile');
     }
 
+
 }

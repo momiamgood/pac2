@@ -31,7 +31,7 @@ use Src\Auth\Auth;
 
 <div class="main">
     <div class="search"><input type="text" name="search" class="seacrh-from"><img
-            src="../../../public/static/media/search_icon.svg" alt="search">
+                src="../../../public/static/media/search_icon.svg" alt="search">
     </div>
 
     <h1>Список залов</h1>
@@ -45,16 +45,15 @@ use Src\Auth\Auth;
             <th scope="col">Назначение</th>
         </tr>
         </thead>
-        <tbody
-            <?php
-            foreach ($hall_list as $hall){
-            ?>
-        >
-        <tr>
-            <th scope="row"><?= $hall->id ?></th>
-            <th scope="row"><?=$hall->appointment ?></th>
-        </tr>
+        <tbody>
         <?php
+        foreach ($hall_list as $hall) {
+            ?>
+            <tr>
+                <th scope="row"><?= $hall->id ?></th>
+                <th scope="row"><?= $hall->appointment ?></th>
+            </tr>
+            <?php
         }
         ?>
     </table>

@@ -14,7 +14,7 @@ class ReaderView
     public function reader_list(Request $request): string
     {
         if ($request->method === "POST") {
-            $result = Reader::where(['reader_id', $request->search, 'fio', $request->search])->get();
+            $result = Reader::where('reader_id', $request->search || 'fio', $request->search)->get();
         } else {
             $result = Reader::orderBy('fio')->get();
         }
@@ -23,8 +23,18 @@ class ReaderView
 
     public function reader(Request $request): string
     {
-        $result = Book_reader::where('reader_id', $request->id)->join('books', 'book_readers.book_id', '=', 'books.book_id')->select('books.name', 'readers.fio')->get();
-        return (new View())->render('site.reader.reader', ['info' => $result]);
+        $fio = Reader::where('reader_id', $request->id)->get('fio');
+        if (Book_reader::where('reader_id', $request->id)->exists()) {
+            $result = Book_reader::where('book_readers.reader_id', $request->id)
+                ->join('books', 'books.book_id', '=', 'book_readers.book_id')
+                ->where('book_readers.reader_id', $request->id)
+                ->join('readers', 'readers.reader_id', '=', 'book_readers.reader_id')
+                ->orderBy('date_issue')
+                ->get();
+        } else {
+            $result = null;
+        }
+        return (new View())->render('site.reader.reader', ['info' => $result, 'fio' => $fio, 'id'=>$request->id]);
     }
 
     public function reader_add(Request $request): string
@@ -37,19 +47,22 @@ class ReaderView
 
     public function book_reader(Request $request): string
     {
-        if ($request->method === 'POST' && Book_reader::create([
+        $err = null;
+        if ($request->method === "POST" && Book_reader::whereNot('book_id', $request->book_id && 'reader_id', $request->id)->exists()) {
+            if (Book_reader::create([
                 'book_id' => $request->book_id,
                 'reader_id' => $request->id,
                 'date_issue' => date('Y-m-d'),
-                'date_back' => $request->date_back,
                 'librarian_id ' => Auth::user()->id
             ])) {
-            app()->route->redirect('/readers');
+                app()->route->redirect('/readers');
+            }
+        } else {
+            $err = 'Эта книга уже выдана';
         }
-
         $date_issue = Book_reader::where('reader_id', $request->id)->get('date_issue');
         $book = Book::where('book_id', $request->id)->get('name');
         $book_list = Book::orderBy('name')->get();
-        return (new View())->render('site.reader.reader_book', ['book_list' => $book_list, 'date_issue' => $date_issue, 'book' => $book]);
+        return (new View())->render('site.reader.reader_book', ['book_list' => $book_list, 'date_issue' => $date_issue, 'book' => $book, 'error' => $err]);
     }
 }
