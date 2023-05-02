@@ -30,6 +30,7 @@ use Src\Auth\Auth;
 </div>
 <main>
     <h1>Добавление читателя</h1>
+    <p><?= $errors ?></p>
     <form method="post">
         <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
         <label for="fio">ФИО</label>
@@ -40,5 +41,4 @@ use Src\Auth\Auth;
         <input type="text" name="phone_number">
         <button class="submit-btn">Добавить</button>
     </form>
-
 </main>

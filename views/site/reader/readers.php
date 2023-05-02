@@ -35,6 +35,7 @@ use Src\Auth\Auth;
         Добавить читателя
     </a>
     <form method="post" class="search-from">
+        <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
         <input type="text" name="search" placeholder="Поиск">
     </form>
 

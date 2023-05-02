@@ -29,6 +29,8 @@ use Src\Auth\Auth;
     </div>
 </div>
 <main>
+    <p><?= $errors?></p>
+
     <h1>Добавление книги</h1>
     <form method="post" enctype="multipart/form-data">
         <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
@@ -52,6 +54,7 @@ use Src\Auth\Auth;
         <select class="form-select" aria-label="" name="genre_id">
             <option selected>Выберете жанр</option>
             <?php
+
             foreach ($genre_list as $genre) {?>
                 <option value="<?= $genre->id ?>"><?= $genre->name ?></option>
                 <?php

@@ -34,6 +34,7 @@ use Src\Auth\Auth;
     <h1>Список книг</h1>
 
     <form method="post" class="search-from">
+        <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
         <input type="text" name="search" placeholder="Поиск">
     </form>
 

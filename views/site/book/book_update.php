@@ -31,6 +31,7 @@ use Src\Auth\Auth;
 <main>
     <h1>Редактирование книги</h1>
     <form method="post">
+        <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
         <label for="name">Название</label>
         <input type="text" name="name" id="name">
         <label for="author">Автор</label>

@@ -6,6 +6,7 @@ use Model\Book;
 use Model\Book_reader;
 use Src\Auth\Auth;
 use Src\Request;
+use Src\Validator\Validator;
 use Src\View;
 use Model\Reader;
 
@@ -14,7 +15,7 @@ class ReaderView
     public function reader_list(Request $request): string
     {
         if ($request->method === "POST") {
-            $result = Reader::where('reader_id', $request->search || 'fio', $request->search)->get();
+            $result = Reader::where('reader_id', 'like', '%' . $request->search . '%' || 'fio', '%' . $request->search . '%')->get();
         } else {
             $result = Reader::orderBy('fio')->get();
         }
@@ -34,11 +35,23 @@ class ReaderView
         } else {
             $result = null;
         }
-        return (new View())->render('site.reader.reader', ['info' => $result, 'fio' => $fio, 'id'=>$request->id]);
+        return (new View())->render('site.reader.reader', ['info' => $result, 'fio' => $fio, 'id' => $request->id]);
     }
 
     public function reader_add(Request $request): string
     {
+        $validator = new Validator($request->all(), [
+            'fio' => ['required'],
+            'adress' => ['required'],
+            'phone_number' => ['required']
+        ], [
+            'required' => 'Поле :field пусто',
+        ]);
+        if ($validator->fails()) {
+            $message = json_encode($validator->errors(), JSON_UNESCAPED_UNICODE);
+            return new View('site.reader.reader_add', ['errors' => $message]);
+        }
+
         if ($request->method === 'POST' && Reader::create($request->all())) {
             app()->route->redirect('/readers');
         }

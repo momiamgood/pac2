@@ -34,7 +34,7 @@ class BookView
     public function book_list(Request $request): string
     {
         if ($request->method === "POST") {
-            $book_list = Book::where('name', $request->search)->get();
+            $book_list = Book::where('name', 'like', '%'.$request->search.'%')->get();
         } else {
             $book_list = Book::orderBy('name')->get();
         }
@@ -44,6 +44,8 @@ class BookView
 
     public function book_add(Request $request): string
     {
+        $message = null;
+
         $hall_list = Hall::all();
         $genre_list = Genre::all();
         $publisher_list = Publisher::all();
@@ -54,15 +56,15 @@ class BookView
                 'author' => ['required'],
                 'price' => ['required'],
                 'annotation' => ['required'],
-
             ], [
                 'required' => 'Поле :field пусто',
-                'unique' => 'Поле :field должно быть уникально',
-                'cyrillic' => 'Поле :field должно состоять из кирилицы',
-                'number' => 'Поле :field должно быть числом',
             ]);
             if ($validator->fails()) {
                 $message = json_encode($validator->errors(), JSON_UNESCAPED_UNICODE);
+                return new View('site.book.book_add', ['hall_list' => $hall_list,
+                    'genre_list' => $genre_list,
+                    'publisher_list' => $publisher_list,
+                    'errors' => $message]);
             }
 
             $path = '../public/static/media/covers/';
@@ -71,6 +73,7 @@ class BookView
 
             $new_filename = uniqid();
             $file->setName($new_filename);
+
             $file_name = $file->getNameWithExtension($new_filename);
 
             try {
@@ -99,7 +102,7 @@ class BookView
         return (new View())->render('site.book.book_add', ['hall_list' => $hall_list,
             'genre_list' => $genre_list,
             'publisher_list' => $publisher_list,
-            'errors' => $errors]);
+            'errors' => $message]);
     }
 
     public function book_update(Request $request): string
@@ -120,7 +123,6 @@ class BookView
                 'genre_id' => $request->genre_id,
                 'hall_id' => $request->hall_id,
                 'publisher_id' => $request->publisher_id,
-
             ])) {
             app()->route->redirect('/books');
         }

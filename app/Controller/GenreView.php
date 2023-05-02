@@ -4,9 +4,11 @@ namespace Controller;
 
 use Model\Genre;
 use Src\Request;
+use Src\Validator\Validator;
 use Src\View;
 
-class GenreView {
+class GenreView
+{
     public
     function genre_list(): string
     {
@@ -18,6 +20,16 @@ class GenreView {
     function genre_add(Request $request): string
     {
         if ($request->method === 'POST' && Genre::create($request->all())) {
+            $validator = new Validator($request->all(), [
+                'name' => ['required']
+            ], [
+                'required' => 'Поле :field пусто',
+            ]);
+            if ($validator->fails()) {
+                $message = json_encode($validator->errors(), JSON_UNESCAPED_UNICODE);
+                return new View('site.genre.genre_add', ['errors' => $message]);
+            }
+
             app()->route->redirect('/genres');
         }
         return new View('site.genre.genre_add');
