@@ -33,59 +33,69 @@ foreach ($book as $b) {
     ?>
 
     <main>
-    <h1><?= $b->name ?></h1>
+        <h1><?= $b->name ?></h1>
 
-    <a href="/book-update?id=<?= $b->book_id ?>">Обновить данные о книге</a>
+        <a href="/book-update?id=<?= $b->book_id ?>">Обновить данные о книге</a>
 
-    <div class="half-block">
         <div>
-            <p><?= $b->author ?></p>
-            <p><?= $b->date_publish ?></p>
+            <div class="half-block">
+                <div>
+                    <p><?= $b->author ?></p>
+                    <p><?= $b->date_publish ?></p>
+                </div>
+
+                <div class="price">
+                    <p><?= $b->price ?></p>
+                </div>
+            </div>
+
+            <p><?= $b->annotation ?></p>
         </div>
 
-        <div class="price">
-            <p><?= $b->price ?></p>
-        </div>
-    </div>
-
-    <p><?= $b->annotation ?></p>
-    <?php
-}
-?>
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Номер читательского билета</th>
-            <th scope="col">ФИО</th>
-            <th scope="col">Дата выдачи</th>
-            <th scope="col">Дата возврата</th>
-        </tr>
-        </thead>
-        <tbody>
         <?php
-        foreach ($reader_list as $reader) {
-            ?>
-            <tr>
-            <td><?= $reader->id ?></td>
-            <td><?= $reader->fio ?></td>
-            <td><?= $reader->date_issue ?></td>
-            <?php
-            if ($reader->date_back === null) {
+}
+        if ($cover) {
+            foreach ($cover as $c) {
+                echo $c->cover;
                 ?>
-                <td><a href="/date_back_add?id=<?= $book_id ?>"</td>
-                <?php
-            } else {
-                ?>
-                <td><?=$reader->date_back ?></td>
-                ?>
-                </tr>
+
+                <img src="../../<?= $c->cover ?>"
                 <?php
             }
         }
         ?>
-    </table>
 
-
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Номер читательского билета</th>
+                <th scope="col">ФИО</th>
+                <th scope="col">Дата выдачи</th>
+                <th scope="col">Дата возврата</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($reader_list as $reader) {
+                ?>
+                <tr>
+                <td><?= $reader->id ?></td>
+                <td><?= $reader->fio ?></td>
+                <td><?= $reader->date_issue ?></td>
+                <?php
+                if ($reader->date_back === null) {
+                    ?>
+                    <td><a href="/date_back_add?id=<?= $book_id ?>"</td>
+                    <?php
+                } else {
+                    ?>
+                    <td><?= $reader->date_back ?></td>
+                    </tr>
+                    <?php
+                }
+            }
+            ?>
+        </table>
     </main>
-<?php
+    <?php
+

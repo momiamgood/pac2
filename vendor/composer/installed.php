@@ -3,7 +3,7 @@
         'name' => 'momiamgood/serv',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '50108871aff7bc25cb9f1f6f6d9a055effaaf37d',
+        'reference' => '94838c89bbf69d56e363e246e1e4a8a5285eda1c',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -17,6 +17,17 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../brick/math',
             'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'codeguy/upload' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'b32c8ae4e0e6e050696db9166a7dd57a186ef09a',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../codeguy/upload',
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
             'dev_requirement' => false,
         ),
         'doctrine/inflector' => array(
@@ -141,7 +152,7 @@
         'momiamgood/serv' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '50108871aff7bc25cb9f1f6f6d9a055effaaf37d',
+            'reference' => '94838c89bbf69d56e363e246e1e4a8a5285eda1c',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

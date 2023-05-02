@@ -30,7 +30,8 @@ use Src\Auth\Auth;
 </div>
 <main>
     <h1>Добавление книги</h1>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
+        <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
         <label for="name">Название</label>
         <input type="text" name="name" id="name" placeholder="Название книги">
         <label for="author">Автор</label>
@@ -76,6 +77,8 @@ use Src\Auth\Auth;
             }
             ?>
         </select>
+
+        <input type="file" name="cover_file">
 
         <button class="submit-btn">Добавить</button>
     </form>

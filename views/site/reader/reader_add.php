@@ -31,6 +31,7 @@ use Src\Auth\Auth;
 <main>
     <h1>Добавление читателя</h1>
     <form method="post">
+        <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
         <label for="fio">ФИО</label>
         <input type="text" name="fio">
         <label for="adress">Адрес</label>

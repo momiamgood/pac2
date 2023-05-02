@@ -8,6 +8,7 @@ use Model\Genre;
 use Model\Hall;
 use Model\Publisher;
 use Src\Request;
+use Src\Validator\Validator;
 use Src\View;
 
 class BookView
@@ -24,10 +25,10 @@ class BookView
         } else {
             $result = null;
         }
-
+        $cover = Book::where('book_id', $request->id)->get('cover');
         $book_id = $request->id;
         $book = Book::where('book_id', $request->id)->get();
-        return (new View())->render('site.book.book', ['book' => $book, 'book_id' => $book_id, 'reader_list' => $result]);
+        return (new View())->render('site.book.book', ['book' => $book, 'book_id' => $book_id, 'reader_list' => $result, 'cover' => $cover]);
     }
 
     public function book_list(Request $request): string
@@ -47,10 +48,58 @@ class BookView
         $genre_list = Genre::all();
         $publisher_list = Publisher::all();
 
-        if ($request->method === 'POST' && Book::create($request->all())) {
-            app()->route->redirect('/books');
+        if ($request->method === "POST") {
+            $validator = new Validator($request->all(), [
+                'name' => ['required'],
+                'author' => ['required'],
+                'price' => ['required'],
+                'annotation' => ['required'],
+
+            ], [
+                'required' => 'Поле :field пусто',
+                'unique' => 'Поле :field должно быть уникально',
+                'cyrillic' => 'Поле :field должно состоять из кирилицы',
+                'number' => 'Поле :field должно быть числом',
+            ]);
+            if ($validator->fails()) {
+                $message = json_encode($validator->errors(), JSON_UNESCAPED_UNICODE);
+            }
+
+            $path = '../public/static/media/covers/';
+            $storage = new \Upload\Storage\FileSystem($path);
+            $file = new \Upload\File('cover_file', $storage);
+
+            $new_filename = uniqid();
+            $file->setName($new_filename);
+            $file_name = $file->getNameWithExtension($new_filename);
+
+            try {
+                $file->upload();
+            } catch (\Exception $e) {
+                $errors = $file->getErrors();
+            }
+
+            if (Book::create([
+                'name' => $request->name,
+                'cover' => $path . $file_name,
+                'author' => $request->author,
+                'date_publish' => $request->date_publish,
+                'price' => $request->price,
+                'annotation' => $request->annotation,
+                'new' => $request->new,
+                'genre_id' => $request->genre_id,
+                'hall_id' => $request->hall_id,
+                'publisher_id' => $request->publisher_id,
+                'rent' => true
+            ])) {
+                app()->route->redirect('/books');
+            }
         }
-        return (new View())->render('site.book.book_add', ['hall_list' => $hall_list, 'genre_list' => $genre_list, 'publisher_list' => $publisher_list]);
+
+        return (new View())->render('site.book.book_add', ['hall_list' => $hall_list,
+            'genre_list' => $genre_list,
+            'publisher_list' => $publisher_list,
+            'errors' => $errors]);
     }
 
     public function book_update(Request $request): string

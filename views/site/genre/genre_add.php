@@ -31,6 +31,7 @@ use Src\Auth\Auth;
 <main>
     <h1>Добавление жанра</h1>
     <form method="post">
+        <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
         <label for="name">Название жанра</label>
         <input type="text" name="name">
 
