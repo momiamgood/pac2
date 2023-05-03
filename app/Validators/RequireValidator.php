@@ -7,7 +7,7 @@ use Src\Validator\AbstractValidator;
 class RequireValidator extends AbstractValidator
 {
 
-    protected string $message = 'Field :field is required';
+    protected string $message = 'Поле :field не должно быть пустым';
 
     public function rule(): bool
     {

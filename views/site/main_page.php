@@ -36,13 +36,9 @@ use Src\Auth\Auth;
 
     <h1>Главная</h1>
     <p class="txt">На главной странице представлены наиболее популярные книги</p>
-    <div class="popular-book-list"
+    <div class="popular-book-list">
         <?php
-        foreach ($book_list
-
-        as $book){
-        ?>
-    >
+        foreach ($book_list as $book){?>
         <div class="popular-book-list-itm">
             <p class="title"><?= $book->name ?></p>
             <div class="half-block">
@@ -53,10 +49,9 @@ use Src\Auth\Auth;
                 <p class="price"><?= $book->price ?></p>
             </div>
             <div class="bottom-block">
-                <a class="annotation-btn" href="books/?id=<?= $book->book_id ?>">Перейти к аннотации -></a>
+                <a class="annotation-btn" href="book/?id=<?=$book->book_id?>">Перейти к аннотации -></a>
             </div>
         </div>
-
         <?php
         }
         ?>

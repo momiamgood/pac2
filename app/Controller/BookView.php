@@ -34,7 +34,7 @@ class BookView
     public function book_list(Request $request): string
     {
         if ($request->method === "POST") {
-            $book_list = Book::where('name', 'like', '%'.$request->search.'%')->get();
+            $book_list = Book::where('name', 'like', '%' . $request->search . '%')->get();
         } else {
             $book_list = Book::orderBy('name')->get();
         }
@@ -54,10 +54,13 @@ class BookView
             $validator = new Validator($request->all(), [
                 'name' => ['required'],
                 'author' => ['required'],
-                'price' => ['required'],
+                'price' => ['required', 'number'],
                 'annotation' => ['required'],
+                'date_publish' => ['number']
             ], [
                 'required' => 'Поле :field пусто',
+                'letter' => 'Поле :field должно содержать только буквы и символы',
+                'number' => 'Поле :field должно содержать только цифры'
             ]);
             if ($validator->fails()) {
                 $message = json_encode($validator->errors(), JSON_UNESCAPED_UNICODE);
@@ -83,16 +86,16 @@ class BookView
             }
 
             if (Book::create([
-                'name' => $request->name,
-                'cover' => $path . $file_name,
-                'author' => $request->author,
-                'date_publish' => $request->date_publish,
-                'price' => $request->price,
-                'annotation' => $request->annotation,
-                'new' => $request->new,
-                'genre_id' => $request->genre_id,
-                'hall_id' => $request->hall_id,
-                'publisher_id' => $request->publisher_id,
+                'name' => str($request->name),
+                'cover' => str(( $path . $file_name)),
+                'author' => str($request->author),
+                'date_publish' => date($request->date_publish),
+                'price' => (int) ($request->price),
+                'annotation' =>str( $request->annotation),
+                'new' => (bool) $request->new,
+                'genre_id' => (int) $request->genre_id,
+                'hall_id' => (int) $request->hall_id,
+                'publisher_id' => (int) $request->publisher_id,
                 'rent' => true
             ])) {
                 app()->route->redirect('/books');
@@ -113,20 +116,39 @@ class BookView
         $book = Book::where('book_id', $request->id)->get();
 
 
-        if ($request->method == "POST" && Book::where('book_id', $request->id)->update([
-                'name' => $request->name,
-                'author' => $request->author,
-                'date_publish' => $request->date_publish,
-                'price' => $request->price,
-                'annotation' => $request->annotation,
-                'new' => $request->new,
-                'genre_id' => $request->genre_id,
-                'hall_id' => $request->hall_id,
-                'publisher_id' => $request->publisher_id,
-            ])) {
-            app()->route->redirect('/books');
-        }
+        if ($request->method == "POST") {
 
+            $path = '../public/static/media/covers/';
+            $storage = new \Upload\Storage\FileSystem($path);
+            $file = new \Upload\File('cover_file', $storage);
+
+            $new_filename = uniqid();
+            $file->setName($new_filename);
+
+            $file_name = $file->getNameWithExtension($new_filename);
+
+            try {
+                $file->upload();
+            } catch (\Exception $e) {
+                $errors = $file->getErrors();
+            }
+
+            if (Book::where('book_id', $request->id)->update([
+                'name' => str($request->name),
+                'cover' => $path . $file_name,
+                'author' => str($request->author),
+                'date_publish' => date($request->date_publish),
+                'price' => (int) ($request->price),
+                'annotation' =>str( $request->annotation),
+                'new' => (bool) $request->new,
+                'genre_id' => (int) $request->genre_id,
+                'hall_id' => (int) $request->hall_id,
+                'publisher_id' => (int) $request->publisher_id,
+                'rent' => true
+            ])) {
+                app()->route->redirect('/books');
+            }
+        }
         return (new View())->render('site.book.book_update', ['hall_list' => $hall_list, 'genre_list' => $genre_list, 'publisher_list' => $publisher_list, 'book' => $book]);
     }
 

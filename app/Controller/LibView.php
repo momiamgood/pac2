@@ -19,9 +19,9 @@ class LibView {
     function lib_add(Request $request): string
     {
         if ($request->method === 'POST' && User::create([
-                'name' => $request->name,
-                'login' => $request->login,
-                'password' => $request->password,
+                'name' => str($request->name),
+                'login' => str($request->login),
+                'password' => str($request->password),
                 'role_id' => 2
             ])) {
             app()->route->redirect('/librarians');

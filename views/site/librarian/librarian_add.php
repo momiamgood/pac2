@@ -30,6 +30,7 @@ use Src\Auth\Auth;
 </div>
 <main>
     <h1>Добавление библиотекаря</h1>
+    <p><?= $errors?></p>
     <form method="post">
         <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
         <label for="name">ФИО</label>

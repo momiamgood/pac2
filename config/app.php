@@ -11,7 +11,10 @@ return [
     ],
     'validators' => [
         'required' => \Validators\RequireValidator::class,
-        'unique' => \Validators\UniqueValidator::class
+        'unique' => \Validators\UniqueValidator::class,
+        'number' => \Validators\NumberValidator::class,
+        'letters' => \Validators\LetterValidator::class,
+
     ],
     'routeAppMiddleware' => [
         'csrf' => \Middlewares\CSRFMiddleware::class,

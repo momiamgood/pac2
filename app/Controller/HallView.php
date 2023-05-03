@@ -22,10 +22,11 @@ class HallView {
 
         if ($request->method === 'POST' && Hall::create($request->all())) {
             $validator = new Validator($request->all(), [
-                'number' => ['required'],
+                'number' => ['required', 'number'],
                 'appointment'=>['required']
             ], [
                 'required' => 'Поле :field пусто',
+                'number'=>'Поле :filed должно содержать только цифры'
             ]);
             if ($validator->fails()) {
                 $message = json_encode($validator->errors(), JSON_UNESCAPED_UNICODE);

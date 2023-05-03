@@ -19,11 +19,9 @@ class PublisherView
     public
     function publisher_add(Request $request): string
     {
-        if ($request->method === 'POST' && Publisher::create($request->all())) {
-
+        if ($request->method === 'POST') {
             $validator = new Validator($request->all(), [
-                'number' => ['required'],
-                'appointment' => ['required']
+                'name' => ['required'],
             ], [
                 'required' => 'Поле :field пусто',
             ]);
@@ -31,7 +29,10 @@ class PublisherView
                 $message = json_encode($validator->errors(), JSON_UNESCAPED_UNICODE);
                 return new View('site.publisher.publisher_add', ['errors' => $message]);
             }
-            app()->route->redirect('/publishers');
+
+            if (Publisher::create($request->all())) {
+                app()->route->redirect('/publishers');
+            }
         }
         return new View('site.publisher.publisher_add');
     }

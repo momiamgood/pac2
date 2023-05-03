@@ -30,10 +30,11 @@ use Src\Auth\Auth;
 </div>
 <main>
     <h1>Выдача книги</h1>
+    <p><?=$error?></p>
     <form method="post">
+        <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
         <label for="book_id">Книга</label>
 
-        <p><?=$error?></p>
 
         <input name="book_id" id="book_id" type="text" list="books" placeholder="Выберите книгу">
         <datalist id="books">
