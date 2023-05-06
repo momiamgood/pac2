@@ -3,6 +3,11 @@
     "description": "pac",
     "type": "library",
     "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Momiamgood\\Collect\\": "src/"
+        }
+    },
     "minimum-stability": "dev",
     "require": {
         "php": "^7.4 | ^8.0"
